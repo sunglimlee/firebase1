@@ -16,7 +16,8 @@ class Home extends StatelessWidget {
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
           actions: <Widget>[
-            TextButton.icon( // FlatButton Alternative with Icon
+            // IconButton 이거 사용하는게 베스트
+            TextButton.icon( // FlatButton Alternative with Icon,
                 onPressed: () async {
                   await _auth.signOut(); // 리턴값이 중요하지 않나? Future 이나 null 이 리턴이 되는데
                 },

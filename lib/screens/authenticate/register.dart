@@ -2,7 +2,8 @@ import 'package:firebase1/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+  final Function _toggleView;
+  const Register({Key? key, required Function toggleView}) : _toggleView = toggleView, super(key: key); // 보이지? 외부의 함수를 통째로 넣는것. 생성자함수, 생성자 함수 베스트
 
   @override
   State<Register> createState() => _RegisterState();
@@ -23,6 +24,14 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.brown[400], // 약간 더 진하게 설정한다.
         elevation: 0.0,
         title: Text('Sign up to Brew Crew'),
+        actions: [
+          TextButton.icon( // FlatButton Alternative with Icon,
+              onPressed: ()  {
+                widget._toggleView(); // 이거 알고 있지? widget 을 사용해야 하는거..
+              },
+              icon: Icon(Icons.person),
+              label: Text("Sign in"))
+        ],
       ),
       body: Center(
         child: Container(
@@ -52,8 +61,6 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.pink),
                     onPressed: () async {
-                      print(email);
-                      print(password);
                     },
                     child: Text(
                       "Register",
