@@ -34,12 +34,12 @@ class _SignInState extends State<SignIn> {
           ),
           child: Text('Sign in anon'),
           onPressed: () async {
-            dynamic result = await _auth.signInAnon(); // 클래스안의 정적객체를 이용해서 연결을 시도한다.
-            if (result == null) {
+            dynamic userModel = await _auth.signInAnon(); // 클래스안의 정적객체를 이용해서 연결을 시도한다.
+            if ( userModel == null) {
               print('error signing in');
             } else {
               print('signed in');
-              print(result);
+              print(userModel.uid);
             }
           }, // 여기서 시간이 걸리는 작업이므로 비동기화 작업을 한다.
         ),
