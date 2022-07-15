@@ -20,7 +20,7 @@ class AuthService {
   Future signInAnon() async { // sign in anonymous, will be asynchronous
     try {
       var result = await _auth.signInAnonymously();
-      var userCredential = result;
+      var userCredential = result; // TODO null 일때 에러 잡기
       print(userCredential.toString());
       return _userFromFirebaseUser(userCredential.user); // 여기를 보면 제대로 연결이 되었기 때문에 uid 를 가진 UserModel 객체가 넘어오는 거다. 제대로 로그인이 되었다는 거지.
     } catch (e) {
