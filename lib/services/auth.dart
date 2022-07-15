@@ -51,4 +51,14 @@ class AuthService {
   // register with email & password
 
   // sign out
+  /// 리턴타입 : Future 또는 null
+  Future signOut() async {
+    try {
+      return await _auth.signOut(); // 파이어베이스에서 제공해주는 사인아웃
+    } catch(e) {
+      print(e.toString());
+      return null;
+
+    }
+  }
 }
