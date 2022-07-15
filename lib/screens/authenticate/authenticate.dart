@@ -1,3 +1,4 @@
+import 'package:firebase1/screens/authenticate/register.dart';
 import 'package:firebase1/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SignIn(), // 진짜 파이어베이스를 연결하고 있는거야? 너무 흥분된다.
+      child: Register(), // 진짜 파이어베이스를 연결하고 있는거야? 너무 흥분된다.
     );
   }
 }

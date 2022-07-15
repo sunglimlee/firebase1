@@ -17,8 +17,15 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService(); // 잘봐라. AuthService 객체안에서 이미 정적 객체를 만들고 그걸 사용하고 있다.
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    // text field state
+    // 항상 이런 local variable 을 이용해서 저장하는걸 보도록 하자.
+
     return Scaffold(
       backgroundColor: Colors.brown[100], // color 의 strength 를 설정할 수 있다. 커피의 농도, 진하기를 설정하는데 유효하다.
       appBar: AppBar(
@@ -26,22 +33,45 @@ class _SignInState extends State<SignIn> {
         elevation: 0.0,
         title: Text('Sign in to Brew Crew'),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.brown[400]),
-          ),
-          child: Text('Sign in anon'),
-          onPressed: () async {
-            dynamic userModel = await _auth.signInAnon(); // 클래스안의 정적객체를 이용해서 연결을 시도한다.
-            if ( userModel == null) {
-              print('error signing in');
-            } else {
-              print('signed in');
-              print(userModel.uid);
-            }
-          }, // 여기서 시간이 걸리는 작업이므로 비동기화 작업을 한다.
+      body: Center(
+        child: Container(
+          alignment: Alignment.center ,
+          width: 400,
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          child: Form(
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 20.0,),
+                TextFormField( // 값을 변경할 때마다 해당 함수가 작동한다.
+                  onChanged: (val) {
+                    // [question] The declaration 'setState' isn't referenced.
+                    // [answer] 괄호로 감싸준다.
+                    setState(() => email = val);
+                  },
+                ),
+                SizedBox(height: 20.0,),
+                TextFormField(
+                  onChanged: (val) {
+                    setState(() => password = val);
+                  },
+                  obscureText: true,
+                ),
+                SizedBox(height: 20.0,),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.pink),
+                    onPressed: () async {
+                      print(email);
+                      print(password);
+                    },
+                    child: Text(
+                      "Sign in",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                ),
+              ],
+            ),
+          )
         ),
       ),
     );
