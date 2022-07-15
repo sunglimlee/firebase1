@@ -29,6 +29,15 @@ class AuthService {
     }
   }
 
+  /// auth change user stream // 스트림을 사용하기 위한 클래스
+  ///
+  /// ## 정말 중요하다. 매번 받는 객체를 내가 원하는 객체로 즉각 변환해 주게 하는게 map 함수이다.
+  /// 스트림이 이렇게 간단하나? 그래서 그랸 StreamProvider 를 사용하면 되는건가?
+  Stream<UserModel?> get user {
+    return _auth.authStateChanges()
+        .map((user) => _userFromFirebaseUser(user)); // 정말 중요하다. 매번 받는 객체를 내가 원하는 객체로 즉각 변환해 주게 하는게 map 함수이다.
+  }
+
   /// create userModel object based on FirebaseUser
   ///
   /// 생각해보니 기존의 User 를 계속 사용하여도 될 것 같다.
