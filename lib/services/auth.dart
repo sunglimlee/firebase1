@@ -6,8 +6,14 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance; // 맨처응 auth 를 연결한 수 있는 정적 인스턴스를 얻어와야 한다.
 
 
-  // sign in anonymous, will be asynchronous
-  Future signInAnon() async {
+  /// sign in anonymous, will be asynchronous
+  ///
+  /// 먼저 구글 Authentication 에 Anonymous 사용하는 걸 등록해야 함
+  /// 시간을 요하는 작업이므로 Future 가 리턴될텐데
+  ///
+  /// - 성공하면 : return [UserCredentical]
+  /// - 실패하면 : return null // terminal 에서 에러코드 프린트 된 걸 확인가능
+  Future signInAnon() async { // sign in anonymous, will be asynchronous
     try {
       var result = await _auth.signInAnonymously();
       var user = result.user;
