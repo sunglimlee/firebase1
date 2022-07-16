@@ -1,3 +1,4 @@
+import 'package:firebase1/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase1/model/user.dart';
@@ -68,6 +69,10 @@ class AuthService {
     try {
       var result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      // create a new document for the user with the uid
+      if (user != null) {
+        await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
+      }
       return _userFromFirebaseUser(user); // 성공하면
     } catch(e) {
         print(e.toString());

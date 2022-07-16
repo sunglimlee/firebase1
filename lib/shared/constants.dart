@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// 더 재밌는 사실은 이 값을 다시 with 를 이용해서 값을 바꿀 수 있다는 사실이다. 왜냐하면 const 는 현재 객체의 주소를 가리킬 뿐이거든.
 /// 그래서 이렇게 내가 원하는 사용자 정의 객체를 쉽게 만들고 수정도 할 수 있게 되는 거다.
 const textInputDecoration = InputDecoration(
-    hintText: 'Email',
+    labelText: 'Email',
     fillColor: Colors.white,
     filled: true,
     enabledBorder: OutlineInputBorder(

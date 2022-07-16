@@ -15,7 +15,7 @@ class SignIn extends StatefulWidget {
 
   const SignIn({Key? key, required Function toggleView})
       : _toggleView = toggleView,
-        super(key: key); // 보이지? 외부의 함수를 통째로 넣는것. 생성자함수, 생성자 함수 베스트
+        super(key: key); // 보이지? 외부의 함수를 통째로 넣는것. 생성자함수, 생성자 함수
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -89,7 +89,7 @@ class _SignInState extends State<SignIn> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                    decoration: textInputDecoration.copyWith(labelText: 'Password'),
                     validator: (val) {
                       if (val != null && val.length < 6) {
                         return 'Enter a password 6+ chars long';

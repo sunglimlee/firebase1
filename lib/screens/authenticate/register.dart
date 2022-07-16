@@ -66,7 +66,7 @@ class _RegisterState extends State<Register> {
                     // [answer] https://stackoverflow.com/questions/68141719/the-property-isempty-cant-be-unconditionally-accessed-because-the-receiver-ca
                     validator: (val) {
                       // 비어 있으면
-                      if (val != null && val.isEmpty) {
+                      if (val != null && val.isEmpty) { // null check 베스트
                         return 'Enter an email.';
                       } else {
                         return null;
@@ -82,7 +82,7 @@ class _RegisterState extends State<Register> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                    decoration: textInputDecoration.copyWith(labelText: 'Password'),
                     validator: (val) {
                       if (val != null && val.length < 6) {
                         return 'Enter a password 6+ chars long';
@@ -98,7 +98,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  ElevatedButton(
+                  ElevatedButton( // RaisedButton 대용
                       style: ElevatedButton.styleFrom(primary: Colors.pink),
                     onPressed: () async {
                       // [question] The method 'validate' can't be unconditionally invoked because the receiver can be 'null'.
@@ -113,7 +113,7 @@ class _RegisterState extends State<Register> {
                           if (result == null) {
                             // error 이라면
                             setState(() {
-                              error = 'Please supply a valid email address';
+                              error = 'Please supply a valid email address'; // TODO 기존에 이메일이 존재하면 SignIn Page 로 이동하게끔 해야함.
                               loading = false;
                               print(error);
                             });
