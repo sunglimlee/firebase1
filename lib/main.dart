@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // [question] The argument type 'Stream<UserModel?>' can't be assigned to the parameter type 'Stream<UserModel>?'.
     // [answer] <UserModel?> 이렇게 바꾸자.
-    return StreamProvider<UserModel?>.value(
-      value: AuthService().user, // 여기 보이지? 여기서 객체를 만들어서 밑으로 보내주는다. 여기에 객체가 만들어져 있다.
+    return StreamProvider<UserModel?>.value( // 로그인이 되니깐 자동으로 다시 그려주게 되는거구나... 너무너무 중요하다. 이 스트림으로 하위에 모두 바뀌게 하겠다.
+      value: AuthService().user, // 여기 보이지? 여기서 객체를 만들어서 밑으로 보내주는다. 여기에 객체가 만들어져 있다. 나중에 sign in 혹은 home 으로 가기위해 중요한 부분이다.
       initialData: null,
       child: MaterialApp( // 여기서 StreamProvider 를 만들어준다. 그래야 밑에서 전부 접근가능하지.
         debugShowCheckedModeBanner: false,

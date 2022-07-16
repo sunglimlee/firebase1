@@ -12,7 +12,7 @@ class AuthService {
   /// 먼저 구글 Authentication 에 Anonymous 사용하는 걸 등록해야 함
   /// 시간을 요하는 작업이므로 Future 가 리턴될텐데
   ///
-  /// - 성공하면 : return [UserCredentical]
+  /// - 성공하면 : return [UserCredential]
   /// - 실패하면 : return null // terminal 에서 에러코드 프린트 된 걸 확인가능
   ///
   /// ## 여기서 잘봐야 하는게 sign-in 하게 되어 uid 를 얻으면 내가 원하는 UserModel 객체를 넘겨주어서 계속 작업을 하는것이다.
@@ -21,7 +21,7 @@ class AuthService {
     try {
       var result = await _auth.signInAnonymously();
       var userCredential = result; // TODO null 일때 에러 잡기
-      print(userCredential.toString());
+      print(userCredential.user?.email != null ? userCredential.user!.email.toString() : " 값이 없습니다.");
       return _userFromFirebaseUser(userCredential.user); // 여기를 보면 제대로 연결이 되었기 때문에 uid 를 가진 UserModel 객체가 넘어오는 거다. 제대로 로그인이 되었다는 거지.
     } catch (e) {
       print(e.toString());
@@ -30,11 +30,16 @@ class AuthService {
   }
 
   /// auth change user stream // 스트림을 사용하기 위한 클래스
+  /// UserModel 의 값이 들어오는지 감시하겠다는거다.
   ///
   /// ## 정말 중요하다. 매번 받는 객체를 내가 원하는 객체로 즉각 변환해 주게 하는게 map 함수이다.
   /// 스트림이 이렇게 간단하나? 그래서 그랸 StreamProvider 를 사용하면 되는건가?
+  ///
+  /// 매번 유저가 signed-in 혹은 signed-out 을 할 때마다 여기 Stream 에서 알려주고
+  ///
+  /// https://flutterbyexample.com/lesson/stream-provider
   Stream<UserModel?> get user {
-    return _auth.authStateChanges()
+    return _auth.authStateChanges() // Sign in, Sing out 했는지 알려준다.
         .map((user) => _userFromFirebaseUser(user)); // 정말 중요하다. 매번 받는 객체를 내가 원하는 객체로 즉각 변환해 주게 하는게 map 함수이다.
   }
 
@@ -46,9 +51,30 @@ class AuthService {
   }
 
 
-  // sign in with email & password
+  // sign in with email & password, 그래서 여기에 두개가 있구나.
+  Future signInWithEmailAndPassword({required String email, required String password}) async { // 함수 생성
+    try {
+      var result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+      return _userFromFirebaseUser(user); // 성공하면
+    } catch(e) {
+      print(e.toString());
+      return null; // 실패하면 null
+    }
+  }
 
   // register with email & password
+  Future registerWithEmailAndPassword({required String email, required String password}) async { // 함수 생성
+    try {
+      var result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+      return _userFromFirebaseUser(user); // 성공하면
+    } catch(e) {
+        print(e.toString());
+        return null; // 실패하면 null
+    }
+  }
+
 
   // sign out
   /// 리턴타입 : Future 또는 null
