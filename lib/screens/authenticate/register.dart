@@ -1,4 +1,6 @@
 import 'package:firebase1/services/auth.dart';
+import 'package:firebase1/shared/constants.dart';
+import 'package:firebase1/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -20,12 +22,13 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       // color 의 strength 를 설정할 수 있다. 커피의 농도, 진하기를 설정하는데 유효하다.
       appBar: AppBar(
@@ -57,6 +60,7 @@ class _RegisterState extends State<Register> {
                     height: 20.0,
                   ),
                   TextFormField(
+                    decoration: textInputDecoration,
                     // 값을 변경할 때마다 해당 함수가 작동한다.
                     // [question] The property 'isEmpty" can't be unconditionally accessed because the receiver can be 'null'
                     // [answer] https://stackoverflow.com/questions/68141719/the-property-isempty-cant-be-unconditionally-accessed-because-the-receiver-ca
@@ -78,6 +82,7 @@ class _RegisterState extends State<Register> {
                     height: 20.0,
                   ),
                   TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Password'),
                     validator: (val) {
                       if (val != null && val.length < 6) {
                         return 'Enter a password 6+ chars long';
@@ -91,7 +96,7 @@ class _RegisterState extends State<Register> {
                     obscureText: true,
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 40.0,
                   ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.pink),
@@ -102,12 +107,16 @@ class _RegisterState extends State<Register> {
                       if (_formKey.currentState != null) {
                         // null 조건문
                         if (_formKey.currentState!.validate()) {
+                          setState(() => loading = true);
                           // 폼키를 가지고 현재 들어온 값들을 가지고 validation 을 진행한다.
                           dynamic result = await _auth.registerWithEmailAndPassword(email: email, password: password);
                           if (result == null) {
                             // error 이라면
-                            setState(() => error = 'please supply a valid email');
-                            print(error);
+                            setState(() {
+                              error = 'Please supply a valid email address';
+                              loading = false;
+                              print(error);
+                            });
                           }
                         }
                       }

@@ -1,6 +1,18 @@
 # firebase1
 
 #################################################################################################
+Loading Widget
+* flutter_spinkit 4.0.0
+* 새로운 Loading 위젯을 만든다. 
+* bool loading = false; // sign in page 에 local variable 로 넣어준다.
+* 로컬 validation 이 끝나고 나면 loading = true 로 만들고 에러가 나면 loading = false 로 해주고
+* 이제 맨 상단에서 loading 이 true 이면 Loading() false 이면 Scaffold 실행
+* 이게 왜 가능하냐면 후속으로 Firebase validation 이 이루어지고 나면 거기서 다시 Home 화면으로 가게되는 이벤트가 실행되기때문이지. 아주 좋아..!
+#################################################################################################
+TextFormField Decoration 할 떼
+* decoration: textInputDecoration.copyWith(hintText: 'Password'),
+* const textInputDecoration(hintText : "email", .....) 이렇게 만들어놓으면 반복할 필요가 없다.
+#################################################################################################
 Stream 과 StreamProvider 그리고 Provider.of<>(context) 사용법
 * Stream 은 정해놓은 타입을 계속적으로 감시하겠다는 것이고 authStateChanges() 함수와 map() 함수를 통해서 나의 UserModel 을 지속적으로 받겠다는 의미
 * Stream Provider 는 Stream 을 연결해놓고 이제부터 계속 감시하다가 만약 데이터가 달라지면 각 자식들에게 통보
