@@ -24,7 +24,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final AuthService _auth =
       AuthService(); // 잘봐라. AuthService 객체안에서 이미 정적 객체를 만들고 그걸 사용하고 있다.
-  final _formKey = GlobalKey<FormState>(); // 이메일과 패스워드를 이용해서 Firebase 에 Authentication 을 하기 위해 꼭 필요한 글로벌 키이다. // Form 을 구별하기 위해 사용한다.
+  final _formKey = GlobalKey<FormState>(); // 이메일과 패스워드를 이용해서 Firebase 에 Authentication 을 하기 위해 꼭 필요한 글로벌 키이다. // Form 을구별하기 위해 사용한다.
   String email = '';
   String password = '';
   String error = '';
@@ -114,9 +114,9 @@ class _SignInState extends State<SignIn> {
                       if (_formKey.currentState != null) {
                         // null 조건문
                         if (_formKey.currentState!.validate()) {
-                          setState(() => loading = true);
                           // 폼키를 가지고 현재 들어온 값들을 가지고 validation 을 진행한다.
                           dynamic result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                          setState(() => loading = true); // Loading 화면 나오고 있다가 윗줄이 통과되면 확 다바뀌면서 Home() 으로 간다.
                           if (result == null) {
                             // error 이라면
                             setState(() {

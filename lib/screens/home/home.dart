@@ -13,8 +13,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    void _showSettingPanel() { // 잘봐라.. 함수 안에 또 함수를 넣어놨다. 이게 가능해??????
+    // 잘봐라.. 함수 안에 또 함수를 넣어놨다. 이게 가능해??????
+    void _showSettingPanel() {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),

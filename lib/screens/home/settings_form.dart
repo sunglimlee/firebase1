@@ -23,8 +23,9 @@ class _SettingsFormState extends State<SettingsForm> {
 
   @override
   Widget build(BuildContext context) {
+    // Provider 에서 제공한 userModel 을 받아서 그걸로 DatabaseService 를 이용해서 값을 받는다.
     final user = Provider.of<UserModel>(context);
-    return StreamBuilder<UserData>(
+    return StreamBuilder<UserData>( // 이걸 사용한 이유가 있다. 왜냐면 다른 사용자가 값을 변경할 수 도 있거든...
         stream: DatabaseService(uid: user.uid).userData,
         // provider<UserModel> 에서 제공하는 user 를 가지고 stream 을 userData 를 stream 으로 선택하였다. 기억해라. userData 는 get 함수이다.
         builder: (context, snapshot) {

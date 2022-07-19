@@ -11,7 +11,7 @@ class DatabaseService {
 
   final String? _uid;
   DatabaseService({String? uid}) : _uid = uid;
-  final CollectionReference brewCollection = FirebaseFirestore.instance.collection('brews');
+  final CollectionReference brewCollection = FirebaseFirestore.instance.collection('brews'); // instance 호출때마다 매번 같은 Firebase App 이 호출된다.
 
   // 레코드 하나에 모두다
   // 잘봐라.. 지금 이 레코드 하나에 uid 가 연결되고 그안에 user 에 대한 값들을 모두 다 집어넣으려고 한다. 그말은 최대한 많이 정보를 넣어도 된다는 거겠지?

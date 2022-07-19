@@ -23,7 +23,7 @@ class AuthService {
       var result = await _auth.signInAnonymously();
       var userCredential = result; // TODO null 일때 에러 잡기
       print(userCredential.user?.email != null ? userCredential.user!.email.toString() : " 값이 없습니다.");
-      return _userFromFirebaseUser(userCredential.user); // 여기를 보면 제대로 연결이 되었기 때문에 uid 를 가진 UserModel 객체가 넘어오는 거다. 제대로 로그인이 되었다는 거지.
+      return _userModelFromFirebaseUser(userCredential.user); // 여기를 보면 제대로 연결이 되었기 때문에 uid 를 가진 UserModel 객체가 넘어오는 거다. 제대로 로그인이 되었다는 거지.
     } catch (e) {
       print(e.toString());
       return null; // will return null if some errors found
@@ -41,13 +41,13 @@ class AuthService {
   /// https://flutterbyexample.com/lesson/stream-provider
   Stream<UserModel?> get user {
     return _auth.authStateChanges() // Sign in, Sing out 했는지 알려준다.
-        .map((user) => _userFromFirebaseUser(user)); // 정말 중요하다. 매번 받는 객체를 내가 원하는 객체로 즉각 변환해 주게 하는게 map 함수이다.
+        .map((user) => _userModelFromFirebaseUser(user)); // 정말 중요하다. 매번 받는 객체를 내가 원하는 객체로 즉각 변환해 주게 하는게 map 함수이다.
   }
 
   /// create userModel object based on FirebaseUser
   ///
   /// 생각해보니 기존의 User 를 계속 사용하여도 될 것 같다.
-  UserModel? _userFromFirebaseUser(User? user) { // TODO : 나중에 UserModel 과 User 를 합칠 생각을 해보자.
+  UserModel? _userModelFromFirebaseUser(User? user) { // TODO : 나중에 UserModel 과 User 를 합칠 생각을 해보자.
     return user != null ? UserModel(uid: user.uid.toString()) : null; // null 사용법
   }
 
@@ -57,7 +57,7 @@ class AuthService {
     try {
       var result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      return _userFromFirebaseUser(user); // 성공하면
+      return _userModelFromFirebaseUser(user); // 성공하면
     } catch(e) {
       print(e.toString());
       return null; // 실패하면 null
@@ -73,7 +73,7 @@ class AuthService {
       if (user != null) {
         await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
       }
-      return _userFromFirebaseUser(user); // 성공하면
+      return _userModelFromFirebaseUser(user); // 성공하면
     } catch(e) {
         print(e.toString());
         return null; // 실패하면 null
