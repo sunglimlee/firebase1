@@ -35,7 +35,7 @@ firebase init hosting
 +  Wrote build/web/404.html
    ? File build/web/index.html already exists. Overwrite? No
 
-마지막으로 firebase deploy 혹은 deploy --only hosting
+마지막으로 firebase deploy 혹은 firebase deploy --only hosting
 
 
 
